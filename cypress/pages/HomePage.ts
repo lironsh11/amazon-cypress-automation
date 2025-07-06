@@ -28,17 +28,17 @@ export class HomePage extends BasePage {
 
     return this
   }
-  setLocationToHongKong(): this {
+setLocationTo(countryCode: string, countryName: string): this {
     cy.get(this.selectors.locationButton, { timeout: 10000 }).click()
     cy.wait(2000)
     cy.get('span.a-button-text.a-declarative[role="radiogroup"]', { timeout: 10000 }).click()
     cy.wait(1000)
-    cy.get('a.a-dropdown-link[data-value*="HK"]', { timeout: 10000 }).click()
-    cy.get('#GLUXCountryValue', { timeout: 5000 }).should('contain.text', 'Hong Kong')
+    cy.get(`a.a-dropdown-link[data-value*="${countryCode}"]`, { timeout: 10000 }).click()
+    cy.get('#GLUXCountryValue', { timeout: 5000 }).should('contain.text', countryName)
     cy.get('button[name="glowDoneButton"]', { timeout: 10000 }).click()
     cy.wait(3000)
     return this
-  }
+}
 
   validateMainMenu(): this {
     cy.contains('Today\'s Deals').should('be.visible')

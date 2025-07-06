@@ -14,7 +14,7 @@ describe('Task 3 - Shopping Cart Test Suite', () => {
       
       // Search and add pencil sharpener
       homePage.searchForProduct(data.products.pencilSharpener.name)
-      homePage.setLocationToHongKong()
+      homePage.setLocationTo('HK', 'Hong Kong')
       
       cy.get('img[alt*="Bostitch Office Personal Electric Pencil Sharpener"]', { timeout: 15000 })
         .first().click()
