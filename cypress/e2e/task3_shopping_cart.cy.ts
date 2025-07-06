@@ -14,7 +14,7 @@ describe('Task 3 - Shopping Cart Test Suite', () => {
       
       // Search and add pencil sharpener
       homePage.searchForProduct(data.products.pencilSharpener.name)
-      homePage.setLocationTo('HK', 'Hong Kong')
+      homePage.setLocationTo(data.shipping.countryCode, data.shipping.location)
       
       cy.get('img[alt*="Bostitch Office Personal Electric Pencil Sharpener"]', { timeout: 15000 })
         .first().click()
@@ -23,7 +23,7 @@ describe('Task 3 - Shopping Cart Test Suite', () => {
       
       // Add scissors
       cy.visit(data.products.scissors.url)
-      productPage.selectColorOptionBySelector('[data-asin="B08T1GMKVF"] > .a-list-item > .image-swatch-button-with-slots > .a-button-inner > .a-button-input')
+      productPage.selectColorOptionBySelector(data.products.scissors.colorSelector)
       productPage.addToCart()
       productPage.closeModalIfExists()
       
