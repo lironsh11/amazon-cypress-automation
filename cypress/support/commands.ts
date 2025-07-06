@@ -12,20 +12,12 @@ declare global {
 }
 
 Cypress.Commands.add('dismissContinueShoppingModal', () => {
-  cy.get('body').then(($body: JQuery<HTMLElement>) => {
-    const buttons = $body.find('.a-button-text')
-    if (buttons.length > 0) {
-      buttons.each((index: number, element: HTMLElement) => {
-        const buttonText = Cypress.$(element).text().toLowerCase()
-        if (buttonText.includes('continue shopping') || buttonText.includes('continue')) {
-          cy.wrap(element).click({ force: true })
-          return false
-        }
-      })
+  cy.get('body').then(($body) => {
+    if ($body.find('input[value="Continue shopping"]').length > 0) {
+      cy.contains('Continue shopping').click({ force: true });
     }
-  })
-  cy.wait(1000)
-})
+  });
+});
 
 Cypress.Commands.add('clearCart', () => {
   cy.visit('/gp/cart/view.html')
