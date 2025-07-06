@@ -16,18 +16,19 @@ export class HomePage extends BasePage {
     return this
   }
 
- goToCustomerService(): this {
-    // Ensure page is stable before clicking
+goToCustomerService(): this {
+  // Ensure the page body is rendered
+  cy.get('body').should('be.visible');
 
-    cy.get('body').should('be.visible')
-    
-    // Wait for Customer Service link to be available and click it
-    cy.contains(this.selectors.customerServiceLink, { timeout: 10000 })
-      .should('be.visible')           // Verify link is visible
-      .click({ force: true })         // Force click to avoid interception issues
+  // Optionally trigger hover if menu requires it
+  cy.get('#nav-link-accountList', { timeout: 10000 }).trigger('mouseover');
 
-    return this
-  }
+  // Click the Customer Service link, forcing the click in case it's hidden
+  cy.contains(this.selectors.customerServiceLink, { timeout: 10000 })
+    .click({ force: true });
+
+  return this;
+}
 setLocationTo(countryCode: string, countryName: string): this {
     cy.get(this.selectors.locationButton, { timeout: 10000 }).click()
     cy.wait(2000)

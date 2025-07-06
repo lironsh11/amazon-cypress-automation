@@ -16,7 +16,6 @@ export default defineConfig({
     video: true,
     screenshotOnRunFailure: true,
     setupNodeEvents(on, config) {
-      // שימוש ב-import דינמי לתמיכה מלאה ב-TypeScript
       return import('cypress-mochawesome-reporter/plugin').then((plugin) => {
         plugin.default(on);
       });
