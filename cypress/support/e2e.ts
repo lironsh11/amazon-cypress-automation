@@ -1,13 +1,6 @@
 import './commands'
 
-// הוסף beforeEach גלובלי שירוץ לפני כל טסט
-beforeEach(() => {
-  // וודא שהעמוד נטען לפני שמנסים לחפש את המודל
-  cy.wait(2000)
-  cy.dismissContinueShoppingModal()
-})
 
-// טיפול בשגיאות JavaScript
 Cypress.on('uncaught:exception', (err, runnable) => {
   if (
     err.message.includes('cardModuleFactory') ||
@@ -18,4 +11,10 @@ Cypress.on('uncaught:exception', (err, runnable) => {
     return false
   }
   return true
+})
+
+
+beforeEach(() => {
+  cy.wait(2000)
+  cy.dismissContinueShoppingModal()
 })

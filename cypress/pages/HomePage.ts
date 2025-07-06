@@ -16,11 +16,18 @@ export class HomePage extends BasePage {
     return this
   }
 
-  goToCustomerService(): this {
-    cy.contains(this.selectors.customerServiceLink).click()
+ goToCustomerService(): this {
+    // Ensure page is stable before clicking
+
+    cy.get('body').should('be.visible')
+    
+    // Wait for Customer Service link to be available and click it
+    cy.contains(this.selectors.customerServiceLink, { timeout: 10000 })
+      .should('be.visible')           // Verify link is visible
+      .click({ force: true })         // Force click to avoid interception issues
+
     return this
   }
-
   setLocationToHongKong(): this {
     cy.get(this.selectors.locationButton, { timeout: 10000 }).click()
     cy.wait(2000)

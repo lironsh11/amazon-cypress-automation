@@ -1,6 +1,8 @@
+/// <reference types="cypress" />
+
 declare global {
   namespace Cypress {
-    interface Chainable {
+    interface Chainable<Subject = any> {
       dismissContinueShoppingModal(): Chainable<void>
       clearCart(): Chainable<void>
       setLocationToHongKong(): Chainable<void>
@@ -10,10 +12,10 @@ declare global {
 }
 
 Cypress.Commands.add('dismissContinueShoppingModal', () => {
-  cy.get('body').then(($body) => {
+  cy.get('body').then(($body: JQuery<HTMLElement>) => {
     const buttons = $body.find('.a-button-text')
     if (buttons.length > 0) {
-      buttons.each((index, element) => {
+      buttons.each((index: number, element: HTMLElement) => {
         const buttonText = Cypress.$(element).text().toLowerCase()
         if (buttonText.includes('continue shopping') || buttonText.includes('continue')) {
           cy.wrap(element).click({ force: true })
@@ -25,10 +27,9 @@ Cypress.Commands.add('dismissContinueShoppingModal', () => {
   cy.wait(1000)
 })
 
-// שאר הפקודות שלך...
 Cypress.Commands.add('clearCart', () => {
   cy.visit('/gp/cart/view.html')
-  cy.get('body').then(($body) => {
+  cy.get('body').then(($body: JQuery<HTMLElement>) => {
     const deleteButtons = $body.find('[value="Delete"]')
     if (deleteButtons.length > 0) {
       cy.get('[value="Delete"]').first().click({ force: true })
@@ -53,3 +54,5 @@ Cypress.Commands.add('waitForPageLoad', () => {
   cy.get('body', { timeout: 15000 }).should('be.visible')
   cy.wait(1000)
 })
+
+export {}
