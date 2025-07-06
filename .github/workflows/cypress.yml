@@ -18,7 +18,7 @@ jobs:
       - name: 📦 Install dependencies
         run: |
           npm ci
-          npm install typescript --save-dev
+          npm install typescript ts-node --save-dev
 
       - name: 🧪 Run Cypress Tests
         run: npx cypress run
@@ -29,3 +29,10 @@ jobs:
         with:
           name: mochawesome-report
           path: cypress/reports
+
+      - name: 🎥 Upload Cypress Videos
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-videos
+          path: cypress/videos
