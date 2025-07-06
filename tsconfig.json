@@ -10,6 +10,6 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true
   },
-  "include": ["**/*.ts"],
+  "include": ["**/*.ts", "cypress.config.Js"],
   "exclude": ["node_modules"]
 }
