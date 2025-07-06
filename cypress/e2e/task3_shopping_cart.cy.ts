@@ -23,7 +23,7 @@ describe('Task 3 - Shopping Cart Test Suite', () => {
       
       // Add scissors
       cy.visit(data.products.scissors.url)
-      productPage.selectColorOption()
+      productPage.selectColorOptionBySelector('[data-asin="B08T1GMKVF"] > .a-list-item > .image-swatch-button-with-slots > .a-button-inner > .a-button-input')
       productPage.addToCart()
       productPage.closeModalIfExists()
       
