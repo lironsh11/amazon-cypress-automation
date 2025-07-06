@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "cy:run:chrome": "cypress run --browser chrome",
+    "cy:run:task2": "cypress run --spec 'cypress/e2e/task2_customer_service.cy.ts'",
+    "cy:run:task3": "cypress run --spec 'cypress/e2e/task3_shopping_cart.cy.ts'"
+  }
+}
