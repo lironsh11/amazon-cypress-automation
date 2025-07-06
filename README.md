@@ -237,4 +237,4 @@ This project is created for educational and assessment purposes.
 
 **Created by**: Liron Shiryon
 **Date**: 7/6/25
-**Purpose**: QA Automation Interview Assessment
+**Purpose**: QA Automation Assessment
