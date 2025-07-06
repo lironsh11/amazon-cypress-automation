@@ -1,7 +1,7 @@
-import { defineConfig } from 'cypress'
+const { defineConfig } = require('cypress');
 const mochawesome = require('cypress-mochawesome-reporter/plugin');
 
-export default defineConfig({
+module.exports = defineConfig({
   e2e: {
     baseUrl: 'https://amazon.com',
     viewportWidth: 1920,
@@ -12,19 +12,19 @@ export default defineConfig({
     pageLoadTimeout: 30000,
     retries: {
       runMode: 2,
-      openMode: 0
+      openMode: 0,
     },
     video: true,
     screenshotOnRunFailure: true,
     setupNodeEvents(on, config) {
-      mochawesome(on)
+      mochawesome(on);
     },
     reporter: 'cypress-mochawesome-reporter',
     reporterOptions: {
       reportDir: 'cypress/reports',
       overwrite: false,
       html: true,
-      json: true
-    }
-  }
-})
+      json: true,
+    },
+  },
+});
