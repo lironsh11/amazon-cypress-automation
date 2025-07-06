@@ -23,7 +23,7 @@ describe('Task 3 - Shopping Cart Test Suite', () => {
       
       // Add scissors
       cy.visit(data.products.scissors.url)
-    productPage.selectColorByAsin('B08T1GMKVF', 'Color: Red, Black, Blue')
+      productPage.selectColorOption()
       productPage.addToCart()
       productPage.closeModalIfExists()
       
@@ -42,13 +42,14 @@ describe('Task 3 - Shopping Cart Test Suite', () => {
   it('should validate free shipping after increasing quantity', () => {
     cartPage.visit()
     
+
     // Verify initially no free shipping
-    cartPage.verifyFreeShippingNotQualified()
+    cartPage.verifyFreeShippingStatus(false)
     
     // Increase sharpener quantity 3 times
     cartPage.increaseProductQuantity('Bostitch', 3)
     
     // Verify free shipping qualified
-    cartPage.verifyFreeShippingQualified()
+    cartPage.verifyFreeShippingStatus(true)
   })
 })

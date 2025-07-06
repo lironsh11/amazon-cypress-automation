@@ -49,13 +49,12 @@ export class CartPage extends BasePage {
     return this
   }
 
-  verifyFreeShippingQualified(): this {
-    cy.contains(this.selectors.freeShippingMessage, { timeout: 10000 }).should('exist')
-    return this
+ verifyFreeShippingStatus(shouldQualify: boolean, timeout: number = 10000): this {
+  if (shouldQualify) {
+    cy.contains(this.selectors.freeShippingMessage, { timeout }).should('exist')
+  } else {
+    cy.contains(this.selectors.addMoreForFreeShipping, { timeout }).should('exist')
   }
-
-  verifyFreeShippingNotQualified(): this {
-    cy.contains(this.selectors.addMoreForFreeShipping, { timeout: 10000 }).should('exist')
-    return this
-  }
+  return this
+}
 }
