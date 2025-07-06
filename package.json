@@ -5,5 +5,11 @@
     "cy:run:chrome": "cypress run --browser chrome",
     "cy:run:task2": "cypress run --spec 'cypress/e2e/task2_customer_service.cy.ts'",
     "cy:run:task3": "cypress run --spec 'cypress/e2e/task3_shopping_cart.cy.ts'"
+  },
+  "devDependencies": {
+    "cypress-mochawesome-reporter": "^3.8.2",
+    "mochawesome": "^7.1.3",
+    "mochawesome-merge": "^5.0.0",
+    "mochawesome-report-generator": "^6.2.0"
   }
 }

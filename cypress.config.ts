@@ -1,4 +1,5 @@
 import { defineConfig } from 'cypress'
+const mochawesome = require('cypress-mochawesome-reporter/plugin');
 
 export default defineConfig({
   e2e: {
@@ -16,7 +17,14 @@ export default defineConfig({
     video: true,
     screenshotOnRunFailure: true,
     setupNodeEvents(on, config) {
-      // implement node event listeners here
+      mochawesome(on)
     },
-  },
+    reporter: 'cypress-mochawesome-reporter',
+    reporterOptions: {
+      reportDir: 'cypress/reports',
+      overwrite: false,
+      html: true,
+      json: true
+    }
+  }
 })
