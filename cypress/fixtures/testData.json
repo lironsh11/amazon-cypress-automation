@@ -7,6 +7,7 @@
      "scissors": {
       "url": "/Scissors-iBayam-Crafting-Scrapbooking-Knitting/dp/B07H3QKN2Z",
       "name": "Scissors iBayam",
+      "colorText": "Color: Red, Black, Blue",
       "colorSelector": "[data-asin=\"B08T1GMKVF\"] > .a-list-item > .image-swatch-button-with-slots > .a-button-inner > .a-button-input"
     }
   },
