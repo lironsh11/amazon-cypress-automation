@@ -6,8 +6,8 @@ import { defineConfig } from 'cypress';
  */
 export default defineConfig({
   e2e: {
-    // Base URL for all tests - Amazon homepage
-    baseUrl: 'https://amazon.com',
+    // Base URL for all tests - Amazon US homepage (ensures English)
+    baseUrl: 'https://www.amazon.com',
     
     // Browser viewport settings for consistent test execution
     viewportWidth: 1920,    // Desktop resolution width
@@ -31,6 +31,27 @@ export default defineConfig({
     
     // Node events and plugin setup
     setupNodeEvents(on, config) {
+      // Force English language in all browsers
+      on('before:browser:launch', (browser, launchOptions) => {
+        if (browser.name === 'chrome') {
+          launchOptions.args.push('--lang=en-US')
+          launchOptions.args.push('--accept-lang=en-US,en;q=0.9')
+        }
+        if (browser.name === 'firefox') {
+          launchOptions.preferences['intl.accept_languages'] = 'en-US,en'
+          launchOptions.preferences['intl.locale.requested'] = 'en-US'
+        }
+        if (browser.name === 'edge') {
+          launchOptions.args.push('--lang=en-US')
+          launchOptions.args.push('--accept-lang=en-US,en;q=0.9')
+        }
+        if (browser.name === 'electron') {
+          launchOptions.args.push('--lang=en-US')
+          launchOptions.args.push('--accept-lang=en-US,en;q=0.9')
+        }
+        return launchOptions
+      })
+      
       // Setup Mochawesome reporter plugin for enhanced HTML reports
       return import('cypress-mochawesome-reporter/plugin').then((plugin) => {
         plugin.default(on);
