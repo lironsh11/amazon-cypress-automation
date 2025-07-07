@@ -30,27 +30,24 @@ export default defineConfig({
     screenshotOnRunFailure: true,   // Capture screenshots when tests fail
     
     // Node events and plugin setup
-    setupNodeEvents(on, config) {
-      // Force English language in all browsers
-      on('before:browser:launch', (browser, launchOptions) => {
-        if (browser.name === 'chrome') {
-          launchOptions.args.push('--lang=en-US')
-          launchOptions.args.push('--accept-lang=en-US,en;q=0.9')
-        }
-        if (browser.name === 'firefox') {
-          launchOptions.preferences['intl.accept_languages'] = 'en-US,en'
-          launchOptions.preferences['intl.locale.requested'] = 'en-US'
-        }
-        if (browser.name === 'edge') {
-          launchOptions.args.push('--lang=en-US')
-          launchOptions.args.push('--accept-lang=en-US,en;q=0.9')
-        }
-        if (browser.name === 'electron') {
-          launchOptions.args.push('--lang=en-US')
-          launchOptions.args.push('--accept-lang=en-US,en;q=0.9')
-        }
-        return launchOptions
-      })
+setupNodeEvents(on, config) {
+  // Force English language in all browsers
+  on('before:browser:launch', (browser, launchOptions) => {
+    const langArgs = ['--lang=en-US', '--accept-lang=en-US,en;q=0.9']
+
+    const browserName = browser.name.toLowerCase()
+
+    if (['chrome', 'edge', 'electron'].includes(browserName)) {
+      launchOptions.args.push(...langArgs)
+    }
+
+    if (browserName === 'firefox') {
+      launchOptions.preferences['intl.accept_languages'] = 'en-US,en'
+      launchOptions.preferences['intl.locale.requested'] = 'en-US'
+    }
+
+    return launchOptions
+  })
       
       // Setup Mochawesome reporter plugin for enhanced HTML reports
       return import('cypress-mochawesome-reporter/plugin').then((plugin) => {
