@@ -25,7 +25,7 @@ amazon-cypress-automation/
 │       └── testData.json             # Product and configuration data
 ├── docs/                             # Documentation
 │   └── Task1_Test_Planning.md        # Task 1: Test planning and exploration
-├── .github/workflows/cypress.yml    # CI workflow definition
+├── .github/workflows/cypress.yml     # CI workflow definition
 ├── cypress.config.ts                 # Cypress configuration
 ├── tsconfig.json                     # TypeScript configuration
 ├── package.json                      # Project dependencies and scripts
