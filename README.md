@@ -21,8 +21,6 @@ amazon-cypress-automation/
 │   ├── support/                      # Cypress configuration and commands
 │   │   ├── commands.ts               # Custom Cypress commands
 │   │   ├── e2e.ts                    # Global test configuration
-│   │   └── helpers/                  # Helper utilities
-│   │       └── CartHelper.ts         # Cart management utilities
 │   └── fixtures/                     # Test data
 │       └── testData.json             # Product and configuration data
 ├── docs/                             # Documentation
