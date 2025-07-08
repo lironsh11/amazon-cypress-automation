@@ -27,10 +27,14 @@ describe('Task 3 - Shopping Cart Test Suite', () => {
    */
  beforeEach(() => {
   cy.fixture('testData').then((data) => {
+    // Step 1: Visit Amazon homepage
     homePage.visit();
+    // Step 2: Search for pencil sharpener
     homePage.searchForProduct(data.products.pencilSharpener.name);
+    // Step 3: Set shipping location
     homePage.setLocationTo(data.shipping.countryCode, data.shipping.location);
 
+    // Step 4: Click on the pencil sharpener product
     cy.get('img[alt*="Bostitch Office Personal Electric Pencil Sharpener"]', { timeout: 15000 })
       .first()
       .click();
@@ -40,9 +44,8 @@ describe('Task 3 - Shopping Cart Test Suite', () => {
   if (isPrimeOnly) {
     throw new Error('❌ Scissors are Prime-only. Test cannot continue.');
   }
-
       productPage.addToCart();
-
+      
       // Step 6: Navigate to scissors product
       cy.visit(data.products.scissors.url);
 
