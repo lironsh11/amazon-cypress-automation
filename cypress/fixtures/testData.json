@@ -15,7 +15,7 @@
     "customerService": "where is my stuff"
   },
   "shipping": {
-    "countryCode": "HK",
-    "location": "Hong Kong"
+    "countryCode": "GB",
+    "location": "United Kingdom"
   }
 }

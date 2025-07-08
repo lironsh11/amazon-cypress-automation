@@ -2,21 +2,15 @@ import { BasePage } from './BasePage'
 
 /**
  * HomePage - Handles Amazon main homepage interactions
- * 
- * This page object manages all interactions with Amazon's main homepage including
- * product search, navigation to customer service, location settings, and basic
- * homepage validation.
- * 
  * URL: / (root)
  */
 export class HomePage extends BasePage {
-  // Element selectors for homepage interactions
+  // Element selectors for homepage
   private readonly selectors = {
-    searchBox: '#twotabsearchtextbox',                    // Main product search input field
-    customerServiceLink: 'Customer Service',              // Customer service navigation link text
-    locationButton: '#nav-global-location-popover-link', // Location/delivery settings button
+    searchBox: '#twotabsearchtextbox',              // Main product search input
+    customerServiceLink: 'Customer Service',        // Customer service navigation link
     amazonLogo: '#nav-logo',                             // Amazon logo for page validation
-    navigationBar: '#navbar'                             // Main navigation bar
+    locationButton: '#nav-global-location-popover-link'  // Location/delivery settings button
   }
 
   /**
@@ -25,7 +19,6 @@ export class HomePage extends BasePage {
   constructor() {
     super('/')
   }
-
   /**
    * Define the most stable element that indicates Amazon homepage loaded successfully
    * Uses the Amazon logo as it's always present and loads early in the page lifecycle
@@ -34,35 +27,30 @@ export class HomePage extends BasePage {
   getStableSelector(): string {
     return this.selectors.amazonLogo
   }
-
   /**
    * Search for products using main search box
-   * Types the product name and submits search via Enter key
-   * @param productName - Product name or keywords to search for
+   * @param productName - Product name or keywords to search
    * @returns this - For method chaining
    */
   searchForProduct(productName: string): this {
-    // Type product name and press Enter to execute search
+    // Type product name and press Enter to search
     this.typeText(this.selectors.searchBox, `${productName}{enter}`)
     return this
   }
 
   /**
    * Navigate to Customer Service page with enhanced stability
-   * Handles potential hover menus and visibility issues that may occur
-   * in different browser environments or screen sizes
+   * Handles potential hover menus and visibility issues
    * @returns this - For method chaining
    */
   goToCustomerService(): this {
-    // Ensure page is fully loaded and stable before interaction
+    // Ensure page is fully loaded before interaction
     cy.get('body').should('be.visible')
 
-    // Trigger hover on account menu area in case Customer Service link
-    // is hidden in a dropdown menu (common on mobile/responsive layouts)
+    // Trigger hover on account menu in case Customer Service is in dropdown
     cy.get('#nav-link-accountList', { timeout: 10000 }).trigger('mouseover')
 
     // Force click Customer Service link to handle any overlay issues
-    // Force flag ensures click works even if element is partially obscured
     cy.contains(this.selectors.customerServiceLink, { timeout: 10000 })
       .click({ force: true })
 
@@ -70,19 +58,12 @@ export class HomePage extends BasePage {
   }
 
   /**
-   * Set delivery location to specified country (generic method for international testing)
-   * This method supports any country by using country code and name parameters
-   * @param countryCode - Two-letter country code for dropdown selection (e.g., "HK", "US", "UK")
-   * @param countryName - Full country name for verification (e.g., "Hong Kong", "United Kingdome")
+   * Set delivery location to specified country (generic method)
+   * @param countryCode - Country code for selection (e.g., "HK", "US")
+   * @param countryName - Country name for verification (e.g., "Hong Kong", "United States")
    * @returns this - For method chaining
    */
- /**
- * Set delivery location to specified country using data-value.stringVal (e.g., "GB", "HK", "US")
- * @param countryCode - The 2-letter country code inside data-value (e.g., "GB")
- * @param countryName - The visible country name (used for verification, e.g., "United Kingdom")
- * @returns this - For method chaining
- */
-setLocationTo(countryCode: string, countryName: string): this {
+  setLocationTo(countryCode: string, countryName: string): this {
   // Step 1: Open location selection modal
   cy.get(this.selectors.locationButton, { timeout: 10000 }).click()
   cy.wait(2000)
@@ -115,51 +96,16 @@ setLocationTo(countryCode: string, countryName: string): this {
 
   return this
 }
+
   /**
-   * Verify main navigation menu items are visible and accessible
-   * Validates core navigation elements to ensure homepage functionality
+   * Verify main navigation menu items are visible
    * @returns this - For method chaining
    */
   validateMainMenu(): this {
-    // Check that key navigation elements are present and visible
-    // These elements are essential for basic Amazon navigation
-    cy.contains('Today\'s Deals').should('be.visible')      // Deals section
-    cy.contains('Customer Service').should('be.visible')    // Support access
-    cy.contains('Registry').should('be.visible')           // Gift registry feature
-    
-    return this
-  }
-
-  /**
-   * Verify search functionality is working
-   * Additional validation method for search box functionality
-   * @returns this - For method chaining
-   */
-  validateSearchBox(): this {
-    // Verify search box is enabled and accepts input
-    cy.get(this.selectors.searchBox).should('be.visible').and('not.be.disabled')
-    
-    // Verify placeholder text is present (indicates proper initialization)
-    cy.get(this.selectors.searchBox).should('have.attr', 'placeholder')
-    
-    return this
-  }
-
-  /**
-   * Verify homepage core elements loaded successfully
-   * Comprehensive validation for homepage integrity
-   * @returns this - For method chaining
-   */
-  validateHomepage(): this {
-    // Verify Amazon logo is present (primary homepage identifier)
-    this.verifyElementVisible(this.selectors.amazonLogo)
-    
-    // Verify main search box is available (core functionality)
-    this.verifyElementVisible(this.selectors.searchBox)
-    
-    // Verify navigation bar loaded (essential for site navigation)
-    this.verifyElementVisible(this.selectors.navigationBar)
-    
+    // Check key navigation elements are present
+    cy.contains('Today\'s Deals').should('be.visible')
+    cy.contains('Customer Service').should('be.visible')
+    cy.contains('Registry').should('be.visible')
     return this
   }
 }

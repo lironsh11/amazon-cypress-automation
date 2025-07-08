@@ -20,13 +20,13 @@ export abstract class BasePage {
     this.url = url
   }
 
-  /**
+
+ /**
    * Abstract method - Each page must define its stable element for validation
    * @returns string - CSS selector of the most reliable element that indicates page loaded
    */
-  abstract getStableSelector(): string
-
-  /**
+    abstract getStableSelector(): string
+ /**
    * Verify page loaded using the stable selector defined by child class
    * @returns this - Returns the current page instance for method chaining
    */
@@ -37,18 +37,18 @@ export abstract class BasePage {
   }
 
   /**
-   * Navigate to the page URL and verify page loaded successfully
+   * Navigate to the page URL and wait for basic page stability
    * @returns this - Returns the current page instance for method chaining
    */
   visit(): this {
     // Navigate to the page URL using Cypress visit command
     cy.visit(this.url)
     
-    // Wait for page to stabilize after navigation
-    cy.wait(2000)
-    
-    // Automatically verify page loaded using child class stable selector
+ // Automatically verify page loaded using child class stable selector
     this.verifyPageLoaded()
+
+    // Wait 2 seconds for page to stabilize and avoid timing issues
+    cy.wait(2000)
     
     return this // Enable method chaining (e.g., page.visit().clickElement())
   }
