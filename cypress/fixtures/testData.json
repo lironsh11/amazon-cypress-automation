@@ -16,7 +16,6 @@
   },
   "shipping": {
     "countryCode": "HK",
-    "location": "Hong Kong",
-    "freeShippingThreshold": 49
+    "location": "Hong Kong"
   }
 }

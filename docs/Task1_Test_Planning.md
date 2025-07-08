@@ -3,6 +3,13 @@
 ## Website Exploration Summary
 After exploring Amazon.com, I identified the core functionality and user flows that require testing coverage.
 
+## Initial Health Check (Precondition Test)
+
+### 0. **Site Availability and Homepage Health**
+- Test Title: "Verify Amazon.com is up and homepage loads correctly"
+- Priority: Critical
+- Covers: General availability, homepage structure
+
 ## 5 Most Important Test Scenarios
 
 ### 1. **User Authentication and Account Management**
@@ -47,6 +54,11 @@ Verify that users can successfully add products to cart, manage cart contents, a
 - Valid payment method is available for testing
 
 **Test Steps:**
+
+0. **Check if Amazon.com is available**
+   - Action: Load homepage https://amazon.com 
+   - Expected Result: Page displays key UI elements (logo, nav bar)
+
 
 1. **Navigate to Amazon Homepage**
    - Action: Open browser and go to https://amazon.com

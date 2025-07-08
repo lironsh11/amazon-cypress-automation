@@ -12,6 +12,7 @@ import { BasePage } from './BasePage'
 export class CartPage extends BasePage {
   // Private selectors object - centralized element locators for maintainability
   private readonly selectors = {
+    cartContainer: '#sc-active-cart',                              // Main cart container (always present)
     cartItems: '.sc-list-item',                                    // Individual cart item containers
     deleteButton: '[value="Delete"]',                              // Delete item button
     increaseQuantityButton: '[aria-label="Increase quantity by one"] > .a-icon', // Plus button for quantity
@@ -26,6 +27,15 @@ export class CartPage extends BasePage {
    */
   constructor() {
     super('/gp/cart/view.html') // Set the cart page URL in BasePage
+  }
+
+  /**
+   * Define the most stable element that indicates cart page loaded successfully
+   * Uses active cart container as it's always present even with empty cart
+   * @returns string - CSS selector for cart container element
+   */
+  getStableSelector(): string {
+    return this.selectors.cartContainer
   }
 
   /**
