@@ -25,46 +25,48 @@ describe('Task 3 - Shopping Cart Test Suite', () => {
    * Test setup - executed before each test case
    * Creates consistent cart state with two specific products
    */
-  beforeEach(() => {
-    // Load test data from fixtures for maintainable test configuration
-    cy.fixture('testData').then((data) => {
-      // Step 1: Navigate to homepage
-      homePage.visit()
-      
-      // Step 2: Search and add pencil sharpener to cart
-      homePage.searchForProduct(data.products.pencilSharpener.name)
-      
-      // Step 3: Set shipping location (required for shipping calculations)
-      // Hong Kong used to test international shipping thresholds
-      homePage.setLocationTo(data.shipping.countryCode, data.shipping.location)
-      
-      // Step 4: Select pencil sharpener product from search results
-      // Uses alt text matching for reliable product identification
-      cy.get('img[alt*="Bostitch Office Personal Electric Pencil Sharpener"]', { timeout: 15000 })
-        .first().click()
-      
-      // Step 5: Add pencil sharpener to cart with verification
-      // Includes automatic "Added to Cart" confirmation check
-      productPage.addToCart()
-      
-      // Step 6: Navigate to scissors product page
-      // Direct URL navigation to specific product variant
-      cy.visit(data.products.scissors.url)
-      
-      // Step 7: Select specific color variant for scissors
-      // Uses generic selector method for flexibility across products
-      productPage.selectColorOptionBySelector(data.products.scissors.colorSelector, data.products.scissors.colorText)
-      
-      // Step 8: Add scissors to cart and handle any modal popups
-      productPage.addToCart()
-      productPage.closeModalIfExists() // Handles warranty/accessory suggestions
-      
-      // Step 9: Verify cart setup is complete with both products
-      // Essential validation before test execution
-      cartPage.visit()
-      cartPage.verifyCartHasItems(2)
-    })
-  })
+ beforeEach(() => {
+  cy.fixture('testData').then((data) => {
+    homePage.visit();
+    homePage.searchForProduct(data.products.pencilSharpener.name);
+    homePage.setLocationTo(data.shipping.countryCode, data.shipping.location);
+
+    cy.get('img[alt*="Bostitch Office Personal Electric Pencil Sharpener"]', { timeout: 15000 })
+      .first()
+      .click();
+
+    // Step 5: Add pencil sharpener to cart, unless it's Prime-only
+    productPage.isPrimeOnlyProduct().then((isPrimeOnly) => {
+  if (isPrimeOnly) {
+    throw new Error('❌ Scissors are Prime-only. Test cannot continue.');
+  }
+
+      productPage.addToCart();
+
+      // Step 6: Navigate to scissors product
+      cy.visit(data.products.scissors.url);
+
+      // Step 7: Select color option
+      productPage.selectColorOptionBySelector(
+        data.products.scissors.colorSelector,
+        data.products.scissors.colorText
+      );
+
+      // Step 8: Check if scissors are Prime-only
+    productPage.isPrimeOnlyProduct().then((isPrimeOnly2) => {
+  if (isPrimeOnly2) {
+    throw new Error('❌ Scissors are Prime-only. Test cannot continue.');
+  }
+
+        // Step 9: Add scissors and validate cart
+        productPage.addToCart();
+        productPage.closeModalIfExists();
+        cartPage.visit();
+        cartPage.verifyCartHasItems(2);
+      });
+    });
+  });
+});
 
   /**
    * Test cleanup - executed after each test case

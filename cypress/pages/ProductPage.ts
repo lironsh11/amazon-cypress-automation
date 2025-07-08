@@ -53,6 +53,18 @@ export class ProductPage extends BasePage {
   return this
 }
 
+/**
+ * Checks if the product is restricted to Prime members only
+ * Returns true if user cannot proceed without joining Prime
+ */
+isPrimeOnlyProduct(): Cypress.Chainable<boolean> {
+  return cy.document().then((doc) => {
+    const pageText = doc.body.innerText || '';
+    return pageText.includes('This deal is exclusively for Amazon Prime members.');
+  });
+
+}
+
   /**
    * Close modal dialogs that may appear after adding to cart
    * Handles accessories suggestions, warranty offers, etc.
