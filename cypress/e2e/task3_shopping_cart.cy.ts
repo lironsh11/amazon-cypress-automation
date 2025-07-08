@@ -54,9 +54,9 @@ describe('Task 3 - Shopping Cart Test Suite', () => {
 
       // Step 8: Check if scissors are Prime-only
     productPage.isPrimeOnlyProduct().then((isPrimeOnly2) => {
-  if (isPrimeOnly2) {
+    if (isPrimeOnly2) {
     throw new Error('❌ Scissors are Prime-only. Test cannot continue.');
-  }
+    }
 
         // Step 9: Add scissors and validate cart
         productPage.addToCart();
