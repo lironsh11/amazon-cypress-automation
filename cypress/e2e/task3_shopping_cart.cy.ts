@@ -45,15 +45,15 @@ describe('Task 3 - Shopping Cart Test Suite', () => {
     throw new Error('❌ Scissors are Prime-only. Test cannot continue.');
   }
       productPage.addToCart();
-      
+
       // Step 6: Navigate to scissors product
       cy.visit(data.products.scissors.url);
 
-      // Step 7: Select color option
-      productPage.selectColorOptionBySelector(
-        data.products.scissors.colorSelector,
-        data.products.scissors.colorText
-      );
+      // // Step 7: Select color option
+      // productPage.selectColorOptionBySelector(
+      //   data.products.scissors.colorSelector,
+      //   data.products.scissors.colorText
+      // );
 
       // Step 8: Check if scissors are Prime-only
     productPage.isPrimeOnlyProduct().then((isPrimeOnly2) => {

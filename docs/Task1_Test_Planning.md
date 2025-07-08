@@ -55,9 +55,6 @@ Verify that users can successfully add products to cart, manage cart contents, a
 
 **Test Steps:**
 
-0. **Check if Amazon.com is available**
-   - Action: Load homepage https://amazon.com 
-   - Expected Result: Page displays key UI elements (logo, nav bar)
 
 
 1. **Navigate to Amazon Homepage**
