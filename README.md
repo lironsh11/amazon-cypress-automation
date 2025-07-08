@@ -164,6 +164,9 @@ This project includes a complete CI/CD setup using **GitHub Actions**, enabling 
 Located in `cypress/support/commands.ts`:
 
 * `dismissContinueShoppingModal()` - Handle shopping modal popups
+* `clearCart()` - Recursive cart cleanup
+* `setLocationToHongKong()` - Location configuration
+* `waitForPageLoad()` - Page stability verification
 
 ### Test Data Management
 
