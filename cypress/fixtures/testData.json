@@ -2,7 +2,8 @@
   "products": {
     "pencilSharpener": {
       "name": "Bostitch Office Personal Electric Pencil Sharpener, Powerful Stall-Free Motor, High Capacity Shavings Tray, Gray (EPS4-KTGRAY)",
-      "searchTerm": "Bostitch Office Personal Electric Pencil Sharpener"
+      "searchTerm": "Bostitch",
+      "imageSelector": "img[alt*=\"Bostitch Office Personal Electric Pencil Sharpener\"]"
     },
      "scissors": {
       "url": "/Scissors-iBayam-Crafting-Scrapbooking-Knitting/dp/B07H3QKN2Z",

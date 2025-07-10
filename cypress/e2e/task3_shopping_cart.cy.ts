@@ -15,6 +15,7 @@ import { CartPage } from '../pages/CartPage'
  * - Test: Verify free shipping qualification by increasing quantity
  * - AfterEach: Clean cart state for test isolation
  */
+  let testData: any;
 describe('Task 3 - Shopping Cart Test Suite', () => {
   // Initialize page objects for cart operations
   const homePage = new HomePage()
@@ -25,51 +26,43 @@ describe('Task 3 - Shopping Cart Test Suite', () => {
    * Test setup - executed before each test case
    * Creates consistent cart state with two specific products
    */
- beforeEach(() => {
-  cy.fixture('testData').then((data) => {
-    // Step 1: Visit Amazon homepage
-    homePage.visit();
-    // Step 2: Search for pencil sharpener
-    homePage.searchForProduct(data.products.pencilSharpener.name);
-    // Step 3: Set shipping location
-    homePage.setLocationTo(data.shipping.countryCode, data.shipping.location);
+  beforeEach(() => {
+    cy.fixture('testData').then((data) => {
+      testData = data;
+      // Step 1: Visit Amazon homepage
+      homePage.visit();
+      // Step 2: Search for pencil sharpener
+      homePage.searchForProduct(data.products.pencilSharpener.name);
+      // Step 3: Set shipping location
+      homePage.setLocationTo(data.shipping.countryCode, data.shipping.location);
 
-    // Step 4: Click on the pencil sharpener product
-    cy.get('img[alt*="Bostitch Office Personal Electric Pencil Sharpener"]', { timeout: 15000 })
-      .first()
-      .click();
+      // Step 4: Click on the pencil sharpener product
+      cy.get(data.products.pencilSharpener.imageSelector, { timeout: 15000 })
+        .first()
+        .click();
 
-    // Step 5: Add pencil sharpener to cart, unless it's Prime-only
-    productPage.isPrimeOnlyProduct().then((isPrimeOnly) => {
-  if (isPrimeOnly) {
-    throw new Error('❌ Scissors are Prime-only. Test cannot continue.');
-  }
+      // Step 5: Add pencil sharpener to cart
       productPage.addToCart();
 
       // Step 6: Navigate to scissors product
       cy.visit(data.products.scissors.url);
 
-      // // Step 7: Select color option
-      // productPage.selectColorOptionBySelector(
-      //   data.products.scissors.colorSelector,
-      //   data.products.scissors.colorText
-      // );
+      // Step 7: Select color option
+      productPage.selectColorOptionBySelector(
+        data.products.scissors.colorSelector,
+        data.products.scissors.colorText
+      );
 
-      // Step 8: Check if scissors are Prime-only
-    productPage.isPrimeOnlyProduct().then((isPrimeOnly2) => {
-    if (isPrimeOnly2) {
-    throw new Error('❌ Scissors are Prime-only. Test cannot continue.');
-    }
+      // Step 8: Wait for color selection to be processed
+      cy.wait(2000);
 
-        // Step 9: Add scissors and validate cart
-        productPage.addToCart();
-        productPage.closeModalIfExists();
-        cartPage.visit();
-        cartPage.verifyCartHasItems(2);
-      });
+      // Step 9: Add scissors and validate cart
+      productPage.addToCart();
+      productPage.closeModalIfExists();
+      cartPage.visit();
+      cartPage.verifyCartHasItems(2);
     });
   });
-});
 
   /**
    * Test cleanup - executed after each test case
@@ -107,12 +100,13 @@ describe('Task 3 - Shopping Cart Test Suite', () => {
    * This validates Amazon's dynamic shipping calculation logic.
    */
   it('should qualify for free shipping after increasing pencil sharpener quantity', () => {
+ 
     // Navigate to cart for quantity manipulation
     cartPage.visit()
     
     // Increase pencil sharpener quantity by 3 (total becomes 4 units)
     // Target: Push cart total above $49 threshold for free shipping
-    cartPage.increaseProductQuantity('Bostitch', 3)
+    cartPage.increaseProductQuantity(testData.products.pencilSharpener.name, 3);
     
     // Verify "Your order qualifies for FREE Shipping" message appears
     // Validates successful threshold crossing and UI update
